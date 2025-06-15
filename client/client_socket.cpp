@@ -2,12 +2,12 @@
 
 #include "client_socket.h"
 #include <arpa/inet.h>
+#include <glog/logging.h>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <glog/logging.h>
-#include <stdexcept>
 
 #define PORT 8080
 #define SERVER_IP "127.0.0.2"
