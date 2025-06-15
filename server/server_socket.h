@@ -19,10 +19,10 @@ private:
 public:
   Server_Socket();
   // start and stop methods will return status code
-  bool start();
-  bool stop();
+  bool Start();
+  bool Stop();
   // status method to return status on socket instance
-  bool get_status();
+  bool Get_status();
 };
 
 #endif // SERVER_SOCKET_H

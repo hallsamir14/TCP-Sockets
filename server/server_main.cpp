@@ -15,8 +15,8 @@ int main() {
 
   Server_Socket server = Server_Socket();
 
-  server.start();
-  server.stop();
+  server.Start();
+  server.Stop();
 
   return 0;
 }

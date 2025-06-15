@@ -61,7 +61,7 @@ Server_Socket::Server_Socket() {
   }
 }
 
-bool Server_Socket::start() {
+bool Server_Socket::Start() {
 
   if (status == 0) {
     LOG(INFO) << "Starting Server Socket" << std::endl;
@@ -94,7 +94,7 @@ bool Server_Socket::start() {
   return 0;
 }
 
-bool Server_Socket::stop() {
+bool Server_Socket::Stop() {
   if (status == 1) {
     close(server_socket);
     LOG(INFO) << "Closing Server Socket" << std::endl;
@@ -108,4 +108,4 @@ bool Server_Socket::stop() {
   return 0;
 }
 
-bool Server_Socket::get_status() { return status; }
+bool Server_Socket::Get_status() { return status; }
