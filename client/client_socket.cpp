@@ -17,7 +17,6 @@
 Client node class that defines an instance of a client-side socket.
 */
 
-// private methods
 Client_Socket::Client_Socket() {
   client_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (client_fd < 0) {
@@ -27,7 +26,7 @@ Client_Socket::Client_Socket() {
 
 // TODO:define param to allow server IP and Port to be passed as argument to
 // connectToServer()
-void Client_Socket::connectToServer() {
+void Client_Socket::ConnectToServer() {
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
@@ -45,7 +44,7 @@ void Client_Socket::connectToServer() {
 }
 
 // TODO:define param to allow message to be passed as argument to sendMessage()
-void Client_Socket::sendMessage() {
+void Client_Socket::SendMessage() {
   std::string message = "Client Message";
   char buffer[BUFFER_SIZE] = {0};
 
