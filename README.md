@@ -41,7 +41,7 @@ The project is organized into the following directories and files:
 - **server_socket.cpp**: Implements the `Server_Socket` class, which handles socket creation, binding, listening for connections, and handling client messages.
 - **server_socket.h**: Declares the `Server_Socket` class and its methods.
 
-## Build Source
+## Build and Run Source
 
 **Create Build Directory**
 ```
@@ -67,6 +67,26 @@ make
 **Clean Build Artifacts**
 ```
 make custom_clean
+```
+
+**Run Server (w/Output)**
+```
+./server.bin
+```
+
+**Run Server (No Output)**
+```
+./server.bin > /dev/null 2>&1 &
+```
+
+**Run Client**
+```
+./client.bin
+```
+
+**Cleanup Server Process**
+```
+killall server.bin
 ```
 
 
