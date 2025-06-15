@@ -26,25 +26,28 @@ Client_Socket::Client_Socket() {
 
 // TODO:define param to allow server IP and Port to be passed as argument to
 // connectToServer()
-void Client_Socket::ConnectToServer() {
+bool Client_Socket::ConnectToServer() {
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
 
   if (inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr) <= 0) {
     throw std::runtime_error("Invalid address/ Address not supported");
+    return 0;
   }
 
   if (connect(client_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) <
       0) {
     throw std::runtime_error("Connection failed");
+    return 0;
   }
 
   LOG(INFO) << "Connected to Server" << std::endl;
+  return 1;
 }
 
 // TODO:define param to allow message to be passed as argument to sendMessage()
-void Client_Socket::SendMessage() {
+bool Client_Socket::SendMessage() {
   std::string message = "Client Message";
   char buffer[BUFFER_SIZE] = {0};
 
@@ -53,6 +56,8 @@ void Client_Socket::SendMessage() {
   int valread = read(client_fd, buffer, BUFFER_SIZE);
   if (valread < 0) {
     throw std::runtime_error("Read error");
+    return 0;
   }
   LOG(INFO) << "Server Message:" << buffer << std::endl;
+  return 1;
 }

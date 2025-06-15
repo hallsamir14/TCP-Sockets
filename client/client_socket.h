@@ -14,8 +14,8 @@ private:
 
 public:
   Client_Socket();
-  void ConnectToServer();
-  void SendMessage();
+  bool ConnectToServer();
+  bool SendMessage();
 };
 
 #endif // CLIENT_SOCKET_H
