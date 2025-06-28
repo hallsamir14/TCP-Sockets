@@ -56,3 +56,23 @@ add_custom_target(custom_clean
 file(WRITE ${CMAKE_BINARY_DIR}/cmake_clean.cmake
 "file(REMOVE_RECURSE ${CLIENT_BIN} ${SERVER_BIN})\n"
 )
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+# Client tests
+add_executable(client_test client/tests/client_test.cpp client/client_socket.cpp)
+target_link_libraries(client_test gtest_main glog::glog)
+add_test(NAME client_test COMMAND client_test)
+
+# Server tests
+add_executable(server_test server/tests/server_test.cpp server/server_socket.cpp)
+target_link_libraries(server_test gtest_main glog::glog)
+add_test(NAME server_test COMMAND server_test)
