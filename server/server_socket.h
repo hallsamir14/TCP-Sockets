@@ -23,6 +23,7 @@ private:
   - - - The socket for a specific client connection (used for data exchange with that client).
   */
   int server_socket;
+
   /*
   status is used as a flag or state indicator for the server socket object. 
   For example, it might indicate whether the server is currently running (1 for active, 0 for inactive), 
@@ -32,18 +33,60 @@ private:
   */
   bool status;
 
+  /*
+  bindSocket method binds the server socket to a specified network address, represented by the sockaddr_in structure passed by reference. 
+  This operation is used to associate the socket with a specific port and IP address for listening to incoming connections.
+  If the binding fails, it throws a std::runtime_error exception
+  */
   void bindSocket(struct sockaddr_in &address);
+
+  /*
+  setSocketOptions method configures socket options for the server socket, 
+  enabling address and port reuse by using the setsockopt function. 
+  If the configuration fails, it throws a std::runtime_error exception.
+  */
   void setSocketOptions();
+
+  /*
+  The Server_Socket::listenForConnections method initiates the server socket to listen for incoming connections, with a backlog of 3. 
+  If the listen system call fails, it throws a std::runtime_error exception.
+  */
   void listenForConnections();
+
+  /*
+  The Server_Socket::acceptAndHandleClient method accepts a client connection on a server socket using the provided sockaddr_in address, 
+  reads an inbound message from the client, logs it, 
+  and sends a predefined server message back to the client while logging the outbound message. 
+  If the connection acceptance fails, it throws a std::runtime_error exception.
+  */
   void acceptAndHandleClient(struct sockaddr_in &address);
 
 public:
+  /*
+  Server_Socket() constructor initializes a Server_Socket object 
+  by creating a socket with the AF_INET address family and SOCK_STREAM type. 
+  If the socket creation fails, it throws a std::runtime_error exception.
+  */
   Server_Socket();
-  // start method will ...
+
+  /*
+  Start method initializes and starts a server socket by configuring its address, 
+  setting socket options, binding it, and listening for incoming connections. 
+  If the server socket instance is already active,
+  a log message indicating status is sent to stdout.
+  */
   void Start();
-  // stop moethod will ...
+  
+  /*
+  Stop method is responsible for stopping the server socket by closing it if the socket is active. 
+  If the socket is not active, a log message indicating status is sent to stdout.
+  */
   void Stop();
-  // status method to return status on socket instance
+  
+  /*
+  Get_status method returns the current value of the status member variable, 
+  indicating the status of the server socket instance
+  */
   bool Get_status();
 };
 
