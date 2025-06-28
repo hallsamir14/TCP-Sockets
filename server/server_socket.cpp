@@ -61,7 +61,7 @@ Server_Socket::Server_Socket() {
   }
 }
 
-bool Server_Socket::Start() {
+void Server_Socket::Start() {
 
   if (status == 0) {
     LOG(INFO) << "Starting Server Socket" << std::endl;
@@ -73,39 +73,33 @@ bool Server_Socket::Start() {
     LOG(INFO) << "Address Type:" << address.sin_family << std::endl;
     LOG(INFO) << "Host IP:" << SERVER_IP << std::endl;
     LOG(INFO) << "Host PORT:" << PORT << std::endl;
-
+    
+    status = 1;
     setSocketOptions();
     bindSocket(address);
     listenForConnections();
 
     LOG(INFO) << "Server Listening..." << std::endl;
 
-    status = 1;
-
     acceptAndHandleClient(address);
-
-    return 1;
   }
 
   else if (status == 1) {
     LOG(INFO) << "Server Socket Is Already Active" << std::endl;
   }
 
-  return 0;
 }
 
-bool Server_Socket::Stop() {
+void Server_Socket::Stop() {
   if (status == 1) {
     close(server_socket);
     LOG(INFO) << "Closing Server Socket" << std::endl;
-    return 1;
   }
 
   else if (status == 0) {
     LOG(INFO) << "Socket Is Not Active" << std::endl;
   }
 
-  return 0;
 }
 
 bool Server_Socket::Get_status() { return status; }
