@@ -12,7 +12,6 @@
 #define SERVER_IP "127.0.0.2"
 #define BUFFER_SIZE 1024
 
-
 void Server_Socket::bindSocket(struct sockaddr_in &address) {
   if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
     throw std::runtime_error("Bind failed");
@@ -51,7 +50,6 @@ void Server_Socket::acceptAndHandleClient(struct sockaddr_in &address) {
             << "Message:" << message << std::endl;
 }
 
-
 Server_Socket::Server_Socket() {
 
   server_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -87,7 +85,6 @@ void Server_Socket::Start() {
   else if (status == 1) {
     LOG(INFO) << "Server Socket Is Already Active" << std::endl;
   }
-
 }
 
 void Server_Socket::Stop() {
@@ -99,7 +96,6 @@ void Server_Socket::Stop() {
   else if (status == 0) {
     LOG(INFO) << "Socket Is Not Active" << std::endl;
   }
-
 }
 
 bool Server_Socket::Get_status() { return status; }
