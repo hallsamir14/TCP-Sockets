@@ -19,8 +19,8 @@ private:
 public:
   Server_Socket();
   // start and stop methods will return status code
-  bool Start();
-  bool Stop();
+  void Start();
+  void Stop();
   // status method to return status on socket instance
   bool Get_status();
 };
