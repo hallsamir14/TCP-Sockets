@@ -11,14 +11,15 @@
 #define PORT 8080
 #define SERVER_IP "127.0.0.2"
 #define BUFFER_SIZE 1024
+#define MAX_REQUEST 3
 
-void Server_Socket::bindSocket(struct sockaddr_in &address) {
+void Server_Socket::bind_socket(struct sockaddr_in &address) {
   if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
     throw std::runtime_error("Bind failed");
   }
 }
 
-void Server_Socket::setSocketOptions() {
+void Server_Socket::set_socket_options() {
   int opt = 1;
   if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
                  sizeof(opt)) < 0) {
@@ -26,20 +27,20 @@ void Server_Socket::setSocketOptions() {
   }
 }
 
-void Server_Socket::listenForConnections() {
-  if (listen(server_fd, 3) < 0) {
+void Server_Socket::listen_for_connections() {
+  if (listen(server_fd, MAX_REQUEST) < 0) {
     throw std::runtime_error("Listen failed");
   }
 }
 
-void Server_Socket::acceptAndHandleClient(struct sockaddr_in &address) {
+void Server_Socket::accept_and_handle_client(struct sockaddr_in &address) {
   socklen_t addrlen = sizeof(address);
   server_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen);
   if (server_socket < 0) {
     throw std::runtime_error("Accept failed");
   }
 
-  char buffer[1024] = {0};
+  char buffer[BUFFER_SIZE] = {0};
   std::string message = "Server Message";
 
   read(server_socket, buffer, sizeof(buffer) - 1);
@@ -73,13 +74,13 @@ void Server_Socket::Start() {
     LOG(INFO) << "Host PORT:" << PORT << std::endl;
 
     status = 1;
-    setSocketOptions();
-    bindSocket(address);
-    listenForConnections();
+    set_socket_options();
+    bind_socket(address);
+    listen_for_connections();
 
     LOG(INFO) << "Server Listening..." << std::endl;
 
-    acceptAndHandleClient(address);
+    accept_and_handle_client(address);
   }
 
   else if (status == 1) {

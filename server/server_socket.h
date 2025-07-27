@@ -42,21 +42,21 @@ private:
   listening to incoming connections. If the binding fails, it throws a
   std::runtime_error exception
   */
-  void bindSocket(struct sockaddr_in &address);
+  void bind_socket(struct sockaddr_in &address);
 
   /*
   setSocketOptions method configures socket options for the server socket,
   enabling address and port reuse by using the setsockopt function.
   If the configuration fails, it throws a std::runtime_error exception.
   */
-  void setSocketOptions();
+  void set_socket_options();
 
   /*
   The Server_Socket::listenForConnections method initiates the server socket to
   listen for incoming connections, with a backlog of 3. If the listen system
   call fails, it throws a std::runtime_error exception.
   */
-  void listenForConnections();
+  void listen_for_connections();
 
   /*
   The Server_Socket::acceptAndHandleClient method accepts a client connection on
@@ -65,7 +65,7 @@ private:
   to the client while logging the outbound message. If the connection acceptance
   fails, it throws a std::runtime_error exception.
   */
-  void acceptAndHandleClient(struct sockaddr_in &address);
+  void accept_and_handle_client(struct sockaddr_in &address);
 
 public:
   /*
