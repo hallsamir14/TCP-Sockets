@@ -35,7 +35,7 @@ void Server_Socket::listen_for_connections() {
 
 void Server_Socket::accept_and_handle_client(struct sockaddr_in &address) {
   socklen_t addrlen = sizeof(address);
-  server_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen);
+  server_socket = acceptFunc_(server_fd, (struct sockaddr *)&address, &addrlen);
   if (server_socket < 0) {
     throw std::runtime_error("Accept failed");
   }
@@ -51,7 +51,8 @@ void Server_Socket::accept_and_handle_client(struct sockaddr_in &address) {
             << "Message:" << message << std::endl;
 }
 
-Server_Socket::Server_Socket() {
+Server_Socket::Server_Socket(std::function<int(int, struct sockaddr*, socklen_t*)> acceptFunc)
+: acceptFunc_(acceptFunc), server_fd(-1), server_socket(-1), status(0) {
 
   server_fd = socket(AF_INET, SOCK_STREAM, 0);
   status = 0;
@@ -92,6 +93,7 @@ void Server_Socket::Stop() {
   if (status == 1) {
     close(server_socket);
     LOG(INFO) << "Closing Server Socket" << std::endl;
+    status = 0;
   }
 
   else if (status == 0) {
