@@ -1,5 +1,4 @@
 /*
-client_socket.h will contain foward declaration for data and methods for
 Client_Socket() class
 */
 #ifndef CLIENT_SOCKET_H

@@ -24,7 +24,6 @@ Client_Socket::Client_Socket() {
   }
 }
 
-// TODO:define param to allow server IP and Port to be passed as argument to
 // connectToServer()
 bool Client_Socket::ConnectToServer() {
   struct sockaddr_in server_addr;
@@ -46,7 +45,6 @@ bool Client_Socket::ConnectToServer() {
   return 1;
 }
 
-// TODO:define param to allow message to be passed as argument to sendMessage()
 bool Client_Socket::SendMessage() {
   std::string message = "Client Message";
   char buffer[BUFFER_SIZE] = {0};
