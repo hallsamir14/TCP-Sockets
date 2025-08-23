@@ -17,7 +17,9 @@
 Client node class that defines an instance of a client-side socket.
 */
 
-Client_Socket::Client_Socket() {
+Client_Socket::Client_Socket(
+    std::function<int(int, struct sockaddr *, socklen_t)> connectFunc)
+    : connectFunc_(connectFunc), client_fd(-1), status(0) {
   client_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (client_fd < 0) {
     throw std::runtime_error("Socket creation error");
@@ -35,8 +37,8 @@ bool Client_Socket::ConnectToServer() {
     return 0;
   }
 
-  if (connect(client_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) <
-      0) {
+  if (connectFunc_(client_fd, (struct sockaddr *)&server_addr,
+                   sizeof(server_addr)) < 0) {
     throw std::runtime_error("Connection failed");
     return 0;
   }
