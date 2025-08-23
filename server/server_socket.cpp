@@ -51,8 +51,9 @@ void Server_Socket::accept_and_handle_client(struct sockaddr_in &address) {
             << "Message:" << message << std::endl;
 }
 
-Server_Socket::Server_Socket(std::function<int(int, struct sockaddr*, socklen_t*)> acceptFunc)
-: acceptFunc_(acceptFunc), server_fd(-1), server_socket(-1), status(0) {
+Server_Socket::Server_Socket(
+    std::function<int(int, struct sockaddr *, socklen_t *)> acceptFunc)
+    : acceptFunc_(acceptFunc), server_fd(-1), server_socket(-1), status(0) {
 
   server_fd = socket(AF_INET, SOCK_STREAM, 0);
   status = 0;

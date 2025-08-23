@@ -69,13 +69,16 @@ private:
   void accept_and_handle_client(struct sockaddr_in &address);
 
   /*
-  acceptFunc_ is a callable object (std::function) that encapsulates the behavior of the accept system call.
-  By default, it points to the standard ::accept function, but it can be replaced with a custom implementation,
-  such as a mock function for testing. This enables dependency injection, allowing the accept logic to be
-  customized or simulated without modifying the Server_Socket class itself. The injected function should match
-  the signature of the standard accept call: int(int sockfd, struct sockaddr *addr, socklen_t *addrlen).
+  acceptFunc_ is a callable object (std::function) that encapsulates the
+  behavior of the accept system call. By default, it points to the standard
+  ::accept function, but it can be replaced with a custom implementation, such
+  as a mock function for testing. This enables dependency injection, allowing
+  the accept logic to be customized or simulated without modifying the
+  Server_Socket class itself. The injected function should match the signature
+  of the standard accept call: int(int sockfd, struct sockaddr *addr, socklen_t
+  *addrlen).
   */
-  std::function<int(int, struct sockaddr*, socklen_t*)> acceptFunc_;
+  std::function<int(int, struct sockaddr *, socklen_t *)> acceptFunc_;
 
 public:
   /*
@@ -83,7 +86,8 @@ public:
   by creating a socket with the AF_INET address family and SOCK_STREAM type.
   If the socket creation fails, it throws a std::runtime_error exception.
   */
-  Server_Socket(std::function<int(int, struct sockaddr*, socklen_t*)> acceptFunc = ::accept);
+  Server_Socket(std::function<int(int, struct sockaddr *, socklen_t *)>
+                    acceptFunc = ::accept);
 
   /*
   Start method initializes and starts a server socket by configuring its
