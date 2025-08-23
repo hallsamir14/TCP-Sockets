@@ -48,6 +48,10 @@ bool Client_Socket::ConnectToServer() {
 }
 
 bool Client_Socket::SendMessage() {
+  /*
+  TODO refactor to customize behavior of 'send' function
+  Something here is causeing an exception/interrupt for unit test case
+  */
   std::string message = "Client Message";
   char buffer[BUFFER_SIZE] = {0};
 
